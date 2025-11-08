@@ -1,0 +1,17 @@
+{
+  "name": "steelbooks",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+  "dev": "concurrently \"cd backend && npm run dev\" \"cd renderer && npm run dev\" \"cd electron-main && npx wait-on http://localhost:5173 && npx electron .\"",
+  "start": "electron ."
+},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "wait-on": "^9.0.1"
+  }
+}

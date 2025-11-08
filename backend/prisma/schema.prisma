@@ -1,0 +1,137 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum InvoiceStatus {
+  DRAFT
+  SENT
+  PARTIAL
+  PAID
+}
+
+enum LedgerType {
+  INFLOW
+  OUTFLOW
+}
+
+model Customer {
+  id       Int            @id @default(autoincrement())
+  name     String
+  phone    String?
+  email    String?
+  address  String?
+  invoices SalesInvoice[]
+}
+
+model Supplier {
+  id        Int               @id @default(autoincrement())
+  name      String
+  phone     String?
+  email     String?
+  address   String?
+  purchases PurchaseInvoice[]
+}
+
+model Item {
+  id          Int     @id @default(autoincrement())
+  name        String
+  price       Float
+  description String?
+}
+
+model SalesInvoice {
+  id         Int                @id @default(autoincrement())
+  number     String             @unique
+  customerId Int
+  customer   Customer           @relation(fields: [customerId], references: [id])
+  date       DateTime
+  total      Float
+  status     InvoiceStatus      @default(DRAFT)
+  lines      SalesInvoiceLine[]
+  payments   SalesPayment[]
+}
+
+model SalesInvoiceLine {
+  id          Int          @id @default(autoincrement())
+  invoiceId   Int
+  invoice     SalesInvoice @relation(fields: [invoiceId], references: [id])
+  description String
+  qty         Int
+  unitPrice   Float
+  lineTotal   Float
+}
+
+model SalesPayment {
+  id            Int          @id @default(autoincrement())
+  invoiceId     Int
+  invoice       SalesInvoice @relation(fields: [invoiceId], references: [id])
+  date          DateTime
+  amount        Float
+  method        String
+  ledgerEntryId Int?
+  ledgerEntry   LedgerEntry? @relation(fields: [ledgerEntryId], references: [id])
+}
+
+model PurchaseInvoice {
+  id         Int                   @id @default(autoincrement())
+  number     String                @unique
+  supplierId Int
+  supplier   Supplier              @relation(fields: [supplierId], references: [id])
+  date       DateTime
+  total      Float
+  status     InvoiceStatus         @default(DRAFT)
+  lines      PurchaseInvoiceLine[]
+  payments   PurchasePayment[]
+}
+
+model PurchaseInvoiceLine {
+  id          Int             @id @default(autoincrement())
+  invoiceId   Int
+  invoice     PurchaseInvoice @relation(fields: [invoiceId], references: [id])
+  description String
+  qty         Int
+  unitPrice   Float
+  lineTotal   Float
+}
+
+model PurchasePayment {
+  id            Int             @id @default(autoincrement())
+  invoiceId     Int
+  invoice       PurchaseInvoice @relation(fields: [invoiceId], references: [id])
+  date          DateTime
+  amount        Float
+  method        String
+  ledgerEntryId Int?
+  ledgerEntry   LedgerEntry?    @relation(fields: [ledgerEntryId], references: [id])
+}
+
+model LedgerEntry {
+  id               Int               @id @default(autoincrement())
+  date             DateTime          @default(now())
+  type             LedgerType
+  refType          String
+  refId            Int?
+  description      String?
+  amountIn         Float             @default(0)
+  amountOut        Float             @default(0)
+  balance          Float
+  salesPayments    SalesPayment[]
+  purchasePayments PurchasePayment[]
+}
+
+model BankAccount {
+  id      Int    @id @default(autoincrement())
+  name    String @default("Main Bank")
+  balance Float  @default(0)
+}
