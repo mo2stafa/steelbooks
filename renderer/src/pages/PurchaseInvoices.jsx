@@ -14,14 +14,16 @@ export default function PurchaseInvoices() {
   }, []);
 
   const columns = [
-    { accessor: "#" },
-    { accessor: "Invoice No" },
-    { accessor: "Status" },
-    { accessor: "Supplier Name" },
-    { accessor: "Date" },
-    { accessor: "Base Grand Total" },
-    { accessor: "Outstanding Amount" },
+    { accessor: "#", label: "#" },
+    { accessor: "Invoice No", label: "Invoice No" },
+    { accessor: "Status", label: "Status" },
+    { accessor: "Supplier", label: "Supplier" },
+    { accessor: "Date", label: "Date" },
+    { accessor: "Base Grand Total", label: "Base Grand Total" },
+    { accessor: "Outstanding Amount", label: "Outstanding Amount" },
   ];
+
+  
 
   return <DataTable title={t("Purchase Invoices")} columns={columns} data={invoices} />;
 }

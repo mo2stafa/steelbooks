@@ -32,6 +32,7 @@ model Customer {
   email    String?
   address  String?
   invoices SalesInvoice[]
+  quotes   SalesQuote[]
 }
 
 model Supplier {
@@ -134,4 +135,25 @@ model BankAccount {
   id      Int    @id @default(autoincrement())
   name    String @default("Main Bank")
   balance Float  @default(0)
+}
+
+model SalesQuote {
+  id         Int              @id @default(autoincrement())
+  number     String           @unique
+  customerId Int
+  customer   Customer         @relation(fields: [customerId], references: [id])
+  date       DateTime
+  total      Float
+  status     InvoiceStatus    @default(DRAFT)
+  lines      SalesQuoteLine[]
+}
+
+model SalesQuoteLine {
+  id          Int        @id @default(autoincrement())
+  quoteId     Int
+  quote       SalesQuote @relation(fields: [quoteId], references: [id])
+  description String
+  qty         Int
+  unitPrice   Float
+  lineTotal   Float
 }

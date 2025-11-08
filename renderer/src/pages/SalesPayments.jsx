@@ -14,14 +14,14 @@ export default function SalesPayments() {
   }, []);
 
   const columns = [
-    { accessor: "#" },
-    { accessor: "Invoice No" },
-    { accessor: "Status" },
-    { accessor: "Customer Name" },
-    { accessor: "Date" },
-    { accessor: "Base Grand Total" },
-    { accessor: "Outstanding Amount" },
+    { accessor: "#", label: "#" }, 
+    { accessor: "Payment No", label: "Payment No" },
+    { accessor: "Status", label: "Status" },
+    { accessor: "Party", label: "Party" },
+    { accessor: "Posting Date", label: "Posting Date" },
+    { accessor: "Amount",   label: "Amount" },
   ];
+
 
   return <DataTable title={t("Sales Payments")} columns={columns} data={payments} />;
 }

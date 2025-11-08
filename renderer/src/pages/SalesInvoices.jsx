@@ -14,14 +14,27 @@ export default function SalesInvoices() {
   }, []);
 
   const columns = [
-    { accessor: "#" },
-    { accessor: "Invoice No" },
-    { accessor: "Status" },
-    { accessor: "Customer Name" },
-    { accessor: "Date" },
-    { accessor: "Base Grand Total" },
-    { accessor: "Outstanding Amount" },
+    { accessor: "#", label: "#" },
+    { accessor: "number", label: "Invoice No" },
+    { accessor: "status", label: "Status" },
+    { accessor: "customerName", label: "Customer Name" },
+    { accessor: "date", label: "Date" },
+    { accessor: "total", label: "Base Grand Total" },
+    { accessor: "outstandingAmount", label: "Outstanding Amount" },
   ];
 
-  return <DataTable title={t("Sales Invoices")} columns={columns} data={invoices} />;
+  const formattedData = invoices.map((inv) => ({
+    ...inv,
+    customerName: inv.customerName,
+    date: new Date(inv.date).toLocaleDateString(),
+  }));
+
+  return (
+    <DataTable
+      title={t("Sales Invoices")}
+      columns={columns}
+      data={formattedData}
+      emptyMessage={t("No invoices found")}
+    />
+  );
 }

@@ -14,14 +14,22 @@ export default function SalesQuotes() {
   }, []);
 
   const columns = [
-    { accessor: "#" },
-    { accessor: "Quote No" },
-    { accessor: "Status" },
-    { accessor: "Customer Name" },
-    { accessor: "Date" },
-    { accessor: "Base Grand Total" },
-    { accessor: "Outstanding Amount" },
-  ];
+  { accessor: "#", label: "#" },
+  { accessor: "number", label: "Quote No" },
+  { accessor: "status", label: "Status" },
+  { accessor: "customerName", label: "Customer Name" },
+  { accessor: "date", label: "Date" },
+  { accessor: "total", label: "Total" },
+];
 
-  return <DataTable title={t("Sales Quotes")} columns={columns} data={quotes} />;
+
+    const formattedData = quotes.map(q => ({
+    ...q,
+    customerName: q.customer?.name || "",
+    date: new Date(q.date).toLocaleDateString(),
+  }));
+
+
+
+  return <DataTable title={t("Sales Quotes")} columns={columns} data={formattedData} />;
 }

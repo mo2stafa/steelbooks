@@ -76,6 +76,11 @@ const resources = {
       Language: "Language",
       SwitchToArabic: "Switch to Arabic",
       SwitchToEnglish: "Switch to English",
+      "Sales Payments": "Sales Payments",
+      "Payment No": "Payment No",
+      "Party": "Party",
+      "Posting Date": "Posting Date",
+
 
 
     }
@@ -154,6 +159,11 @@ const resources = {
       Language: "اللغة",
       SwitchToArabic: "التبديل إلى العربية",
       SwitchToEnglish: "التبديل إلى الإنجليزية",
+      "Sales Payments": "مدفوعات المبيعات",
+      "Payment No": "رقم الدفع",
+      "Party": "الطرف",
+      "Posting Date": "تاريخ التسجيل",
+
 
 
     }

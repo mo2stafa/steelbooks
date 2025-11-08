@@ -13,15 +13,15 @@ export default function PurchasePayments() {
       .catch(err => console.error(err));
   }, []);
 
-  const columns = [
-    { accessor: "#" },
-    { accessor: "Invoice No" },
-    { accessor: "Status" },
-    { accessor: "Supplier Name" },
-    { accessor: "Date" },
-    { accessor: "Base Grand Total" },
-    { accessor: "Outstanding Amount" },
+    const columns = [
+    { accessor: "#", label: "#" }, 
+    { accessor: "Payment No", label: "Payment No" },
+    { accessor: "Status", label: "Status" },
+    { accessor: "Party", label: "Party" },
+    { accessor: "Posting Date", label: "Posting Date" },
+    { accessor: "Amount",   label: "Amount" },
   ];
+
 
   return <DataTable title={t("Purchase Payments")} columns={columns} data={payments} />;
 }

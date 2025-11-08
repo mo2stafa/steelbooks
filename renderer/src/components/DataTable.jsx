@@ -12,7 +12,7 @@ export default function DataTable({ title, columns, data, emptyMessage }) {
           <tr style={{ background: "#f2f2f2" }}>
             {columns.map((col, index) => (
               <th key={index} style={{ border: "1px solid #ddd", padding: "8px" }}>
-                {t(col.accessor)}
+                {t(col.label)}
               </th>
             ))}
           </tr>
